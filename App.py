@@ -16,7 +16,7 @@ class App(customtkinter.CTk):
         self.input_frame = InputFrame(self)
         self.input_frame.grid(row=1, column=0, padx=10, pady=(10, 0))
         # self.input_frame.pack(expand=True, fill='both', padx=40, pady=40)
-
+        self.output_frame.fetch_records()
 
 budget_planner_app = App()
 budget_planner_app.mainloop()
