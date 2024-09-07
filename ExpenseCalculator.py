@@ -100,8 +100,8 @@ f1.grid(row=2, column=1, padx = 50, pady = 20)
 f2 = customtkinter.CTkFrame(ws)
 f2.grid(row=1, column=1, padx = 20, pady = 20)
 
-# expense_frame = ExpenseFrame()
-# expense_frame.grid(row=0, column=1, padx = 20, pady = 20)
+expense_frame = ExpenseFrame(ws)
+expense_frame.grid(row=0, column=1, padx = 20, pady = 20)
 
 customtkinter.CTkLabel(f1, text='Expense name', font=f).grid(row=0, column=0, sticky=W, padx = 10)
 customtkinter.CTkLabel(f1, text='Expense amount', font=f).grid(row=1, column=0, sticky=W, padx = 10)
