@@ -6,6 +6,7 @@ from ExpenseFrame import ExpenseFrame
 from tkinter import messagebox
 from Database import *
 import customtkinter
+from IncomeFrame import IncomeFrame
 
 data = Database(db='test.db')
 count = 0
@@ -68,10 +69,7 @@ def update_record():
     
 
 def totalBalance():
-    f = data.fetchRecord(query="Select sum(item_price) from expense_record")
-    for i in f:
-        for j in i:
-            messagebox.showinfo('Current Balance: ', f"Total Expense: ' {j} \nBalance Remaining: {5000 - j}")
+    pass
 
 def refreshData():
     for item in tv.get_children():
@@ -95,13 +93,16 @@ dopvar = StringVar()
 catvar = StringVar()
 
 f1 = customtkinter.CTkFrame(ws)
-f1.grid(row=2, column=1, padx = 50, pady = 20)
+f1.grid(row=2, column=0, padx = 50, pady = 20, columnspan = 2)
 
 f2 = customtkinter.CTkFrame(ws)
-f2.grid(row=1, column=1, padx = 20, pady = 20)
+f2.grid(row=1, column=0, padx = 20, pady = 20, columnspan = 2)
 
 expense_frame = ExpenseFrame(ws)
-expense_frame.grid(row=0, column=1, padx = 20, pady = 20)
+expense_frame.grid(row=0, column=0, pady = (20,0))
+
+income_frame = IncomeFrame(ws)
+income_frame.grid(row=0, column=1, pady = (20,0))
 
 customtkinter.CTkLabel(f1, text='Expense name', font=f).grid(row=0, column=0, sticky=W, padx = 10)
 customtkinter.CTkLabel(f1, text='Expense amount', font=f).grid(row=1, column=0, sticky=W, padx = 10)
@@ -142,13 +143,13 @@ clr_btn = customtkinter.CTkButton(
 
 quit_btn = customtkinter.CTkButton(
     f1, 
-    text='Exit', 
+    text='Currency converter', 
     command=lambda:ws.destroy()
 )
 
 total_bal = customtkinter.CTkButton(
     f1,
-    text='Total Balance',
+    text='Grow Tree',
     command=totalBalance
 )
 

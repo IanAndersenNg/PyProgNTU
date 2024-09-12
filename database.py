@@ -5,7 +5,10 @@ class Database:
         self.conn = sqlite3.connect(db)
         self.cur = self.conn.cursor()
         self.cur.execute(
-            "CREATE TABLE IF NOT EXISTS expense_record (item_name text, item_price float, purchase_date date)")
+            "CREATE TABLE IF NOT EXISTS expense_record (item_name text, item_price float, purchase_date date, category text)")
+        self.conn.commit()
+        self.cur.execute(
+            "CREATE TABLE IF NOT EXISTS income_record (amount, date)")
         self.conn.commit()
 
     def fetchRecord(self, query):
@@ -13,18 +16,26 @@ class Database:
         rows = self.cur.fetchall()
         return rows
 
-    def insertRecord(self, item_name, item_price, purchase_date):
-        self.cur.execute("INSERT INTO expense_record VALUES (?, ?, ?)",
-            (item_name, item_price, purchase_date))
+    def insertExpense(self, item_name, item_price, purchase_date, category):
+        self.cur.execute("INSERT INTO expense_record VALUES (?, ?, ?, ?)",
+            (item_name, item_price, purchase_date, category))
         self.conn.commit()
 
-    def removeRecord(self, rwid):
+    def removeExpense(self, rwid):
         self.cur.execute("DELETE FROM expense_record WHERE rowid=?", (rwid,))
         self.conn.commit()
 
-    def updateRecord(self, item_name, item_price, purchase_date, rid):
-        self.cur.execute("UPDATE expense_record SET item_name = ?, item_price = ?, purchase_date = ? WHERE rowid = ?",
-            (item_name, item_price, purchase_date, rid))
+    def updateExpense(self, item_name, item_price, purchase_date, category, rid):
+        self.cur.execute("UPDATE expense_record SET item_name = ?, item_price = ?, purchase_date = ?, category = ? WHERE rowid = ?",
+            (item_name, item_price, purchase_date, category, rid))
+        self.conn.commit()
+
+    def insertIncome(self, income_amount, income_date):
+        self.cur.execute("INSERT INTO income_record VALUES (?, ?)",(income_amount, income_date))
+        self.conn.commit()
+
+    def updateBudget(self, budget_amount):
+        self.cur.execute("UPDATE budget SET amount = ?  ",(budget_amount))
         self.conn.commit()
 
     def __del__(self):
