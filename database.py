@@ -2,7 +2,7 @@ import sqlite3
 
 class Database:
     def __init__(self, db) -> None:
-        self.conn = sqlite3.connect(db)
+        self.conn = sqlite3.connect(db, check_same_thread=False)
         self.cur = self.conn.cursor()
         self.cur.execute(
             "CREATE TABLE IF NOT EXISTS expense_record (item_name text, item_price float, purchase_date date, category text)")
@@ -33,6 +33,26 @@ class Database:
     def insertIncome(self, income_amount, income_date):
         self.cur.execute("INSERT INTO income_record VALUES (?, ?)",(income_amount, income_date))
         self.conn.commit()
+
+    def getIncome(self, month, year):
+        query = """
+            SELECT SUM(amount)
+            FROM income_record
+            WHERE SUBSTR(date, 4, 2) = ? AND SUBSTR(date, 7, 4) = ?
+        """
+        self.cur.execute(query, (month, year))
+        result = self.cur.fetchone()
+        return result[0] if result[0] is not None else 0 
+    
+    def getExpenses(self, month, year):
+        query = """
+            SELECT SUM(item_price)
+            FROM expense_record
+            WHERE SUBSTR(purchase_date, 4, 2) = ? AND SUBSTR(purchase_date, 7, 4) = ?
+        """
+        self.cur.execute(query, (month, year))
+        result = self.cur.fetchone()
+        return result[0] if result[0] is not None else 0 
 
     def updateBudget(self, budget_amount):
         self.cur.execute("UPDATE budget SET amount = ?  ",(budget_amount))

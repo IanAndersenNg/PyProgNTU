@@ -4,11 +4,10 @@ from tkinter import *
 from Database import Database
 import customtkinter
 
-data = Database(db='test.db')
-
 class IncomeInput(customtkinter.CTkToplevel):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, db, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.db = db
 
         h2 = ('Arial', 14)
 
@@ -32,8 +31,7 @@ class IncomeInput(customtkinter.CTkToplevel):
         budget_button.grid(row=0, column=2, sticky=EW, padx=(10, 10), pady=(10, 10))
         
     def saveRecord(self, income_amount, income_date):
-        global data
-        data.insertIncome(income_amount, income_date)
+        self.db.insertIncome(income_amount, income_date)
 
 
         

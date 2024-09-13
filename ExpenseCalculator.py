@@ -83,7 +83,7 @@ def deleteRow():
     refreshData()
 
 def currency_converter_call():
-    currency_converter = CurrencyConverter(ws)
+    currency_converter = CurrencyConverter()
 
 ws = Tk()
 ws.title('Daily Expenses')
@@ -101,10 +101,10 @@ f1.grid(row=2, column=0, padx = 50, pady = 20, columnspan = 2)
 f2 = customtkinter.CTkFrame(ws)
 f2.grid(row=1, column=0, padx = 20, pady = 20, columnspan = 2)
 
-expense_frame = ExpenseFrame(ws)
+expense_frame = ExpenseFrame(ws, db=data)
 expense_frame.grid(row=0, column=0, pady = (20,0))
 
-income_frame = IncomeFrame(ws)
+income_frame = IncomeFrame(ws, db=data)
 income_frame.grid(row=0, column=1, pady = (20,0))
 
 customtkinter.CTkLabel(f1, text='Expense name', font=f).grid(row=0, column=0, sticky=W, padx = 10)
@@ -144,16 +144,16 @@ clr_btn = customtkinter.CTkButton(
     command=clearEntries
 )
 
-quit_btn = customtkinter.CTkButton(
+currency_converter_btn = customtkinter.CTkButton(
     f1, 
     text='Currency converter', 
-    command=lambda: currency_converter_call(ws)
+    command=lambda: currency_converter_call()
 )
 
-total_bal = customtkinter.CTkButton(
+draw_cherry = customtkinter.CTkButton(
     f1,
     text='Grow Tree',
-    command=totalBalance
+    # command=draw_cherry_tree(2)
 )
 
 total_spent = customtkinter.CTkButton(
@@ -177,8 +177,8 @@ del_btn = customtkinter.CTkButton(
 cur_date.grid(row=4, column=1, sticky=EW, padx=(10, 0), pady=(10, 10))
 submit_btn.grid(row=0, column=2, sticky=EW, padx=(10, 0), pady=(10, 0))
 clr_btn.grid(row=1, column=2, sticky=EW, padx=(10, 0), pady=(10, 0))
-quit_btn.grid(row=2, column=2, sticky=EW, padx=(10, 0), pady=(10, 0))
-total_bal.grid(row=0, column=3, sticky=EW, padx=(10, 10), pady=(10, 0))
+currency_converter_btn.grid(row=2, column=2, sticky=EW, padx=(10, 0), pady=(10, 0))
+draw_cherry.grid(row=0, column=3, sticky=EW, padx=(10, 10), pady=(10, 0))
 update_btn.grid(row=1, column=3, sticky=EW, padx=(10, 10), pady=(10, 0))
 del_btn.grid(row=2, column=3, sticky=EW, padx=(10, 10), pady=(10, 0))
 
