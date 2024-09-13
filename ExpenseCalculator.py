@@ -8,6 +8,8 @@ from Database import *
 import customtkinter
 from IncomeFrame import IncomeFrame
 from CurrencyConverter import CurrencyConverter
+from cherry import draw_cherry_tree
+import re
 
 data = Database(db='test.db')
 count = 0
@@ -15,8 +17,13 @@ selected_rowid = 0
 
 def saveRecord():
     global data
-    data.insertExpense(item_name=item_name.get(), item_price=item_amt.get(), purchase_date=transaction_date.get(), category=category.get())
-       
+    try:
+        if not re.match(r'^\d{2}-\d{2}-\d{4}$', transaction_date.get()):
+            raise ValueError("Date format should be dd-mm-yyyy")
+        data.insertExpense(item_name=item_name.get(), item_price=item_amt.get(), purchase_date=transaction_date.get(), category=category.get())
+    except ValueError as e:
+        messagebox.showerror("Invalid Date", str(e)) 
+
 def setDate():
     date = dt.datetime.now()
     dopvar.set(f'{date:%d %B %Y}')
@@ -67,7 +74,16 @@ def update_record():
     transaction_date.delete(0, END)
     category.delete(0, END)
     tv.after(400, refreshData)
-    
+
+def drawMytree():
+    print("enter drawMyTree")
+    current = dt.datetime.now()
+    print("current : ", current)
+    print("current month :", current.month)
+    print("current year :", current.year)
+    savings = data.getIncome("09", str(current.year)) - data.getExpenses("09", str(current.year))
+    print("savings in drawMyTree:", savings)
+    draw_cherry_tree(savings)
 
 def totalBalance():
     pass
@@ -153,7 +169,7 @@ currency_converter_btn = customtkinter.CTkButton(
 draw_cherry = customtkinter.CTkButton(
     f1,
     text='Grow Tree',
-    # command=draw_cherry_tree(2)
+    command=drawMytree
 )
 
 total_spent = customtkinter.CTkButton(

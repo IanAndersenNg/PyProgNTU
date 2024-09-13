@@ -74,9 +74,10 @@ def draw_cherry_tree(savings):
     left ( 90 )  # Left 90 degrees
     pu ()  # pen up
     backward ( 300 )  # Back 300
-    # l = 5
-    # t = 10
-    # multiplier = savings // 200
-    # tree(min(l * multiplier,15) , min(t * multiplier,150))  # The tree grows as both numbers increase 12,110
-    tree(12,100)
+
+    l = 5
+    t = 10
+
+    multiplier = max(savings // 200, 1)
+    tree(min(l * multiplier, 12), min(t * multiplier,120))
     done ()
