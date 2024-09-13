@@ -7,6 +7,7 @@ from tkinter import messagebox
 from Database import *
 import customtkinter
 from IncomeFrame import IncomeFrame
+from CurrencyConverter import CurrencyConverter
 
 data = Database(db='test.db')
 count = 0
@@ -81,6 +82,8 @@ def deleteRow():
     data.removeExpense(selected_rowid)
     refreshData()
 
+def currency_converter_call():
+    currency_converter = CurrencyConverter(ws)
 
 ws = Tk()
 ws.title('Daily Expenses')
@@ -144,7 +147,7 @@ clr_btn = customtkinter.CTkButton(
 quit_btn = customtkinter.CTkButton(
     f1, 
     text='Currency converter', 
-    command=lambda:ws.destroy()
+    command=lambda: currency_converter_call(ws)
 )
 
 total_bal = customtkinter.CTkButton(

@@ -1,6 +1,6 @@
 from tkinter import *
 import customtkinter
-
+from ExpenseCategory import ExpenseCategory
 
 total_expenses = 5000
 
@@ -16,7 +16,7 @@ class ExpenseFrame(customtkinter.CTkFrame):
         monthOption = customtkinter.CTkOptionMenu(self,values=["January", "February", "March"])
         yearOption = customtkinter.CTkOptionMenu(self,values=["2024", "2025", "2026"])
         graph_button = customtkinter.CTkButton(
-            self,text='Group & Graph'
+            self,text='Group & Graph', command = lambda:ExpenseCategory(master)
         )
 
         expenseLabel.grid(row=0, column=0, sticky=EW, padx=(10, 0), pady=(10, 10), columnspan = 2)
