@@ -20,6 +20,16 @@ def saveRecord():
     try:
         if not re.match(r'^\d{2}-\d{2}-\d{4}$', transaction_date.get()):
             raise ValueError("Date format should be dd-mm-yyyy")
+        
+        if not item_name.get().isalpha():
+            raise ValueError("item name must be alpha")
+        
+        if not category.get().isalpha():
+            raise ValueError("category must be alpha")
+        
+        if not item_amt.get().isdigit():
+            raise ValueError("item amt must be digit")
+        
         data.insertExpense(item_name=item_name.get(), item_price=item_amt.get(), purchase_date=transaction_date.get(), category=category.get())
     except ValueError as e:
         messagebox.showerror("Invalid Date", str(e)) 

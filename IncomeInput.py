@@ -3,6 +3,9 @@
 from tkinter import *
 from Database import Database
 import customtkinter
+import re
+from tkinter import messagebox
+
 
 class IncomeInput(customtkinter.CTkToplevel):
     def __init__(self, db, *args, **kwargs):
@@ -31,7 +34,17 @@ class IncomeInput(customtkinter.CTkToplevel):
         budget_button.grid(row=0, column=2, sticky=EW, padx=(10, 10), pady=(10, 10))
         
     def saveRecord(self, income_amount, income_date):
-        self.db.insertIncome(income_amount, income_date)
+
+        try:
+            if not re.match(r'^\d{2}-\d{2}-\d{4}$', income_date):
+                raise ValueError("Date format should be dd-mm-yyyy")
+            
+            if not income_amount.isdigit():
+                raise ValueError("income amount must be digit")
+            
+            self.db.insertIncome(income_amount, income_date)
+        except ValueError as e:
+            messagebox.showerror("Invalid Date", str(e))         
 
 
         
