@@ -170,7 +170,7 @@ class CurrencyConverter(customtkinter.CTkToplevel):
         convert_button = customtkinter.CTkButton(currency_row, text="Convert", command=convert_currency,width=15)
         convert_button.grid(row=0, column=2, sticky=tk.EW, padx=(10, 0))
 
-        exit_button = customtkinter.CTkButton(currency_row, text="Exit", command=lambda: cc.destroy(),width=15)
+        exit_button = customtkinter.CTkButton(currency_row, text="Exit", command=lambda: self.destroy(),width=15)
         exit_button.grid(row=0, column=3, sticky=tk.EW, padx=(10, 0))
 
         currency_row2 = customtkinter.CTkFrame(conversion_frame)

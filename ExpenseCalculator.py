@@ -112,8 +112,9 @@ def currency_converter_call():
     currency_converter = CurrencyConverter()
 
 ws = Tk()
+ws.configure(background='#2b2b2a')
+customtkinter.set_appearance_mode("dark")
 ws.title('Daily Expenses')
-
 
 f = ('Arial', 14)
 namevar = StringVar()
